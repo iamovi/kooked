@@ -14,7 +14,35 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      roast_history: {
+        Row: {
+          id: string
+          url: string
+          grade: string
+          roast_preview: string
+          full_roasts: Json
+          saving_grace: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          url: string
+          grade: string
+          roast_preview: string
+          full_roasts?: Json
+          saving_grace?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          url?: string
+          grade?: string
+          roast_preview?: string
+          full_roasts?: Json
+          saving_grace?: string
+          created_at?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never

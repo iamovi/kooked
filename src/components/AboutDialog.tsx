@@ -9,50 +9,49 @@ export function AboutDialog() {
     <Dialog.Root>
       <Dialog.Trigger asChild>
         <button
-          className="p-2 rounded-[3px] border-2 border-foreground bg-card text-foreground neo-shadow-sm hover-neo flex items-center justify-center h-10 w-10"
+          className="relative flex items-center justify-center p-2 h-9 w-9 rounded-[2.5px] border border-border bg-card text-foreground hover:bg-muted/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
           aria-label="About this app"
         >
-          <Info className="h-5 w-5" strokeWidth={2.5} />
+          <Info className="h-[18px] w-[18px]" strokeWidth={2} />
         </button>
       </Dialog.Trigger>
 
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 bg-foreground/40 z-50" />
-        <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-[90vw] max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-[3px] border-4 border-foreground bg-card p-8 neo-shadow-lg focus:outline-none">
+        <Dialog.Overlay className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 transition-opacity" />
+        <Dialog.Content className="fixed left-1/2 top-1/2 z-50 w-[95vw] max-w-md -translate-x-1/2 -translate-y-1/2 rounded-[2.5px] border border-border bg-card p-6 shadow-xl focus:outline-none">
           {/* Header */}
-          <div className="flex items-start justify-between mb-4">
-            <Dialog.Title className="text-2xl font-black uppercase tracking-tight text-foreground">
+          <div className="flex items-center justify-between mb-6">
+            <Dialog.Title className="text-xl font-semibold tracking-tight text-foreground">
               About Kooked
             </Dialog.Title>
             <Dialog.Close asChild>
               <button
-                className="p-1 rounded-[3px] border-2 border-foreground bg-card text-foreground hover-neo neo-shadow-sm flex items-center justify-center h-8 w-8 shrink-0"
+                className="rounded-[2.5px] p-2 text-muted-foreground hover:bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
                 aria-label="Close"
               >
-                <X className="h-4 w-4" strokeWidth={3} />
+                <X className="h-4 w-4" strokeWidth={2} />
               </button>
             </Dialog.Close>
           </div>
 
           <Dialog.Description asChild>
-            <div className="space-y-4 text-foreground">
-              <p className="text-base leading-relaxed">
-                <span className="font-black text-hotpink">Kooked</span> is an AI-powered website roaster that mercilessly judges any website you throw at it. Paste a URL, and our AI critic will tear it apart with savage dark humor, brutal honesty, and zero chill.
+            <div className="space-y-6 text-muted-foreground text-sm">
+              <p className="leading-relaxed">
+                <span className="font-semibold text-foreground">Kooked</span> is an AI-powered website roaster that mercilessly judges any website you throw at it. Paste a URL and our AI critic delivers an extensive, deeply sarcastic, paragraph-long takedown — then gives you a shareable link so you can send it to the person responsible.
               </p>
 
-              <div className="rounded-[3px] border-2 border-foreground bg-cyan/10 p-4">
-                <p className="font-bold text-sm uppercase tracking-wider text-cyan mb-2">How it works</p>
-                <ol className="list-decimal list-inside space-y-1 text-sm font-mono">
-                  <li>You paste a website URL</li>
-                  <li>We scrape the site content</li>
-                  <li>Our AI roasts it with zero mercy</li>
-                  <li>You get a grade + savage commentary</li>
+              <div className="rounded-[2.5px] border border-border bg-muted/30 p-4">
+                <p className="font-medium text-xs uppercase tracking-wider text-foreground mb-3">How it works</p>
+                <ol className="list-decimal list-inside space-y-2 font-mono text-xs">
+                  <li>Paste a website URL and hit Roast It</li>
+                  <li>We scrape the site content via Jina Reader</li>
+                  <li>The AI roasts it with zero mercy</li>
+                  <li>You get three brutal paragraphs + a Saving Grace</li>
+                  <li>Share the unique roast link with anyone</li>
                 </ol>
               </div>
 
-
-
-              <p className="text-xs text-muted-foreground font-mono pt-2">
+              <p className="text-xs font-mono text-center pt-2 opacity-70">
                 Built for fun. Don&apos;t take it personally. Or do. We don&apos;t care. 🔥
               </p>
             </div>
