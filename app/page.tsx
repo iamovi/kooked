@@ -33,6 +33,7 @@ export default function Home() {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<(RoastData & { url: string }) | null>(null);
+  const [roastId, setRoastId] = useState<string | null>(null);
   const [error, setError] = useState("");
 
   const handleRoast = async () => {
@@ -40,6 +41,7 @@ export default function Home() {
     setLoading(true);
     setError("");
     setResult(null);
+    setRoastId(null);
 
     try {
       // Fetch site content via Jina
@@ -57,15 +59,19 @@ export default function Home() {
       const parsed = parseRoast(text);
       setResult({ ...parsed, url: url.trim() });
 
-      // Fire and forget global history push
+      // Insert into history and capture the returned id for sharing
       supabase.from("roast_history").insert({
         url: url.trim(),
         grade: parsed.grade,
         roast_preview: parsed.roasts[0] || "Brutal.",
         full_roasts: parsed.roasts,
         saving_grace: parsed.savingGrace,
-      }).then(({ error }) => {
-        if (error) console.error("History logging failed:", error);
+      }).select("id").single().then(({ data, error }) => {
+        if (error) {
+          console.error("History logging failed:", error);
+        } else if (data) {
+          setRoastId(data.id);
+        }
       });
     } catch (e: unknown) {
       const message = e instanceof Error ? e.message : "Something went wrong";
@@ -128,7 +134,7 @@ export default function Home() {
           </div>
         )}
 
-        {result && <RoastCard {...result} />}
+        {result && <RoastCard {...result} roastId={roastId} />}
         </div>
 
         {/* Desktop Sidebar */}
