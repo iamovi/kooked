@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 60 30% 98%;
+    --foreground: 0 0% 0%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+
+    --primary: 11 86% 54%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 90%;
+    --secondary-foreground: 0 0% 0%;
+
+    --muted: 0 0% 90%;
+    --muted-foreground: 0 0% 30%;
+
+    --accent: 187 100% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 0%;
+    --input: 0 0% 0%;
+    --ring: 11 86% 54%;
+
+    --radius: 3px;
+
+    --lime: 110 100% 55%;
+    --orange: 25 100% 50%;
+    --cyan: 187 100% 45%;
+    --hotpink: 11 86% 54%;
+
+    --neo-shadow-color: #000;
+  }
+
+  .dark {
+    --background: 240 10% 8%;
+    --foreground: 0 0% 100%;
+
+    --card: 240 10% 12%;
+    --card-foreground: 0 0% 100%;
+    
+    --popover: 240 10% 12%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 11 86% 54%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 20%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: 187 100% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 100%;
+    --input: 0 0% 100%;
+    --ring: 11 86% 54%;
+
+    --neo-shadow-color: #fff;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  /* Neo-Brutalist Scrollbar */
+  ::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+    border-left: 3px solid hsl(var(--foreground));
+    border-top: 3px solid hsl(var(--foreground));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary));
+    border: 3px solid hsl(var(--foreground));
+    border-radius: 0;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--foreground));
+  }
+}
+
+@layer utilities {
+  .neo-shadow {
+    box-shadow: 4px 4px 0px 0px var(--neo-shadow-color);
+  }
+  
+  .neo-shadow-sm {
+    box-shadow: 2px 2px 0px 0px var(--neo-shadow-color);
+  }
+
+  .neo-shadow-lg {
+    box-shadow: 8px 8px 0px 0px var(--neo-shadow-color);
+  }
+  
+  .hover-neo {
+    @apply transition-transform duration-200 hover:-translate-x-1 hover:-translate-y-1 active:translate-x-0 active:translate-y-0 relative;
+  }
+  
+  .hover-neo:hover {
+    box-shadow: 6px 6px 0px 0px var(--neo-shadow-color);
+  }
+  
+  .hover-neo:active {
+    box-shadow: 2px 2px 0px 0px var(--neo-shadow-color);
+  }
+}
