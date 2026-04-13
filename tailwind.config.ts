@@ -61,7 +61,8 @@ export default {
         hotpink: "hsl(var(--hotpink))",
       },
       fontFamily: {
-        mono: ["'JetBrains Mono'", "'Fira Code'", "monospace"],
+        sans: ["var(--font-mono)", "monospace"],
+        mono: ["var(--font-mono)", "monospace"],
       },
       keyframes: {
         "pulse-slow": {

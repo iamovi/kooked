@@ -1,0 +1,30 @@
+name: Keep Supabase Alive
+
+on:
+  schedule:
+    # Run at 00:00 every 3 days to prevent 7-day auto-pause on Supabase free tier
+    - cron: '0 0 */3 * *'
+  workflow_dispatch: # Allows you to manually trigger it from the GitHub Actions UI
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase Database
+        env:
+          SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+        run: |
+          echo "Pinging Supabase to keep it awake..."
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            --request GET "${SUPABASE_URL}/rest/v1/roast_history?select=id&limit=1" \
+            --header "apikey: ${SUPABASE_KEY}" \
+            --header "Authorization: Bearer ${SUPABASE_KEY}")
+          
+          if [ "$HTTP_STATUS" -eq 200 ]; then
+            echo "Successfully pinged Supabase! Keep-alive succeeded."
+          else
+            echo "Failed to ping Supabase. HTTP Status: $HTTP_STATUS"
+            echo "Make sure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY are set in GitHub Secrets."
+            exit 1
+          fi

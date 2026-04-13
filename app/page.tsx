@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import RoastCard from "@/components/RoastCard";
 import { HistorySidebar } from "@/components/HistorySidebar";
 import { RecentRoasts } from "@/components/RecentRoasts";
-import { Flame } from "lucide-react";
+import { Flame, ArrowLeft } from "lucide-react";
 
 
 interface RoastData {
@@ -96,33 +96,37 @@ export default function Home() {
         
         {/* Main Content Area */}
         <div className="mx-auto lg:mx-0 max-w-2xl flex-1 w-full shrink-0">
-          <div className="flex flex-col items-center lg:items-start mb-12">
-            <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-foreground mb-3 uppercase italic">
-              Kooked
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground font-bold uppercase tracking-widest">
-              Paste a URL. Get destroyed.
-            </p>
-          </div>
+          {!loading && !result && (
+            <div className="flex flex-col items-center lg:items-start mb-12">
+              <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-foreground mb-3 uppercase italic">
+                Kooked
+              </h1>
+              <p className="text-lg md:text-xl text-muted-foreground font-bold uppercase tracking-widest">
+                Paste a URL. Get destroyed.
+              </p>
+            </div>
+          )}
 
           <div className="mb-12">
-            <div className="flex flex-col sm:flex-row gap-4 mb-6">
-              <input
-                type="url"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleRoast()}
-                placeholder="https://example.com"
-                className="flex-1 rounded-[2.5px] border-2 border-foreground bg-card px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground shadow-comic focus:outline-none transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
-              />
-              <button
-                onClick={handleRoast}
-                disabled={loading || !url.trim()}
-                className="rounded-[2.5px] border-2 border-primary bg-primary px-6 py-3 text-sm font-black uppercase text-primary-foreground shadow-comic-primary hover:bg-primary/95 disabled:opacity-50 disabled:pointer-events-none transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
-              >
-                Roast It
-              </button>
-            </div>
+            {!loading && !result && (
+              <div className="flex flex-col sm:flex-row gap-4 mb-6">
+                <input
+                  type="url"
+                  value={url}
+                  onChange={(e) => setUrl(e.target.value)}
+                  onKeyDown={(e) => e.key === "Enter" && handleRoast()}
+                  placeholder="https://example.com"
+                  className="flex-1 rounded-[2.5px] border-2 border-foreground bg-card px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground shadow-comic focus:outline-none transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none font-sans"
+                />
+                <button
+                  onClick={handleRoast}
+                  disabled={loading || !url.trim()}
+                  className="rounded-[2.5px] border-2 border-primary bg-primary px-6 py-3 text-sm font-black uppercase text-primary-foreground shadow-comic-primary hover:bg-primary/95 disabled:opacity-50 disabled:pointer-events-none transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
+                >
+                  Roast It
+                </button>
+              </div>
+            )}
             {!loading && !result && <RecentRoasts />}
           </div>
 
@@ -159,11 +163,26 @@ export default function Home() {
           </div>
         )}
 
-        {result && <RoastCard {...result} roastId={roastId} />}
+        {result && (
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <button
+              onClick={() => {
+                setResult(null);
+                setRoastId(null);
+                setError("");
+              }}
+              className="mb-8 inline-flex items-center gap-2 rounded-[2.5px] border-2 border-foreground bg-card px-4 py-2 text-sm font-black uppercase tracking-widest text-foreground shadow-comic hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-none transition-all"
+            >
+              <ArrowLeft className="h-4 w-4" strokeWidth={3} />
+              Roast Another
+            </button>
+            <RoastCard {...result} roastId={roastId} />
+          </div>
+        )}
         </div>
 
         {/* Desktop Sidebar */}
-        <HistorySidebar />
+        {!loading && !result && <HistorySidebar />}
 
       </div>
     </div>

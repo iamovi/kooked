@@ -2,7 +2,16 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { SplashScreen } from "@/components/SplashScreen";
+import { Reddit_Mono } from "next/font/google";
 import "./globals.css";
+
+const redditMono = Reddit_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "700", "900"],
+  display: "swap",
+  variable: "--font-mono", // Add this
+});
 
 export const metadata: Metadata = {
   title: "KooKed / Website Roaster",
@@ -56,8 +65,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
+    <html lang="en" suppressHydrationWarning className={`${redditMono.variable} ${redditMono.className}`}>
+      <body className="antialiased font-sans">
+        <SplashScreen />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
