@@ -97,4 +97,26 @@
   .glass-panel {
     @apply bg-background/80 backdrop-blur-md border border-border shadow-sm;
   }
+
+  .bg-dots {
+    background-image: radial-gradient(circle, hsl(var(--foreground) / 0.05) 1px, transparent 1.5px);
+    background-size: 24px 24px;
+  }
+
+  .shadow-comic {
+    box-shadow: 4px 4px 0px 0px hsl(var(--foreground));
+  }
+
+  .shadow-comic-primary {
+    box-shadow: 4px 4px 0px 0px hsl(var(--primary));
+  }
+
+  @keyframes comic-flicker {
+    0%, 100% { transform: translateY(0) scale(1); }
+    33% { transform: translateY(-4px) scale(1.05); }
+    66% { transform: translateY(2px) scale(0.95); }
+  }
+  .animate-comic-flicker {
+    animation: comic-flicker 0.3s steps(3) infinite;
+  }
 }

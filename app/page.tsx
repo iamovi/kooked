@@ -4,6 +4,9 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import RoastCard from "@/components/RoastCard";
 import { HistorySidebar } from "@/components/HistorySidebar";
+import { RecentRoasts } from "@/components/RecentRoasts";
+import { Flame } from "lucide-react";
+
 
 interface RoastData {
   grade: string;
@@ -82,47 +85,69 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-background w-full">
-      <div className="mx-auto max-w-[1400px] px-4 py-12 flex relative justify-center lg:justify-between items-start gap-8">
+    <div className="min-h-screen bg-background w-full relative overflow-hidden flex flex-col">
+      {/* Comic Book Dot Pattern Background */}
+      <div className="absolute inset-0 bg-dots opacity-[0.15] pointer-events-none" />
+      
+      {/* Subtle background glow for premium depth */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent pointer-events-none" />
+
+      <div className="mx-auto max-w-[1400px] px-4 py-12 flex relative justify-center lg:justify-between items-start gap-8 z-10 flex-1">
         
         {/* Main Content Area */}
         <div className="mx-auto lg:mx-0 max-w-2xl flex-1 w-full shrink-0">
           <div className="flex flex-col items-center lg:items-start mb-12">
-            <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight text-foreground mb-3">
+            <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-foreground mb-3 uppercase italic">
               Kooked
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground font-medium">
+            <p className="text-lg md:text-xl text-muted-foreground font-bold uppercase tracking-widest">
               Paste a URL. Get destroyed.
             </p>
           </div>
 
-          <div className="mb-12 flex flex-col sm:flex-row gap-4">
-            <input
-              type="url"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleRoast()}
-              placeholder="https://example.com"
-              className="flex-1 rounded-[2.5px] border border-border bg-card px-6 py-4 text-base text-foreground placeholder:text-muted-foreground shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
-            />
-            <button
-              onClick={handleRoast}
-              disabled={loading || !url.trim()}
-              className="rounded-[2.5px] border border-transparent bg-primary px-8 py-4 text-base font-semibold text-primary-foreground shadow-sm hover:bg-primary/90 disabled:opacity-50 disabled:pointer-events-none transition-all focus:outline-none focus:ring-2 focus:ring-primary/50"
-            >
-              Roast It
-            </button>
+          <div className="mb-12">
+            <div className="flex flex-col sm:flex-row gap-4 mb-6">
+              <input
+                type="url"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleRoast()}
+                placeholder="https://example.com"
+                className="flex-1 rounded-[2.5px] border-2 border-foreground bg-card px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground shadow-comic focus:outline-none transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
+              />
+              <button
+                onClick={handleRoast}
+                disabled={loading || !url.trim()}
+                className="rounded-[2.5px] border-2 border-primary bg-primary px-6 py-3 text-sm font-black uppercase text-primary-foreground shadow-comic-primary hover:bg-primary/95 disabled:opacity-50 disabled:pointer-events-none transition-all active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
+              >
+                Roast It
+              </button>
+            </div>
+            {!loading && !result && <RecentRoasts />}
           </div>
 
         {loading && (
-          <div className="py-20 flex flex-col items-center justify-center space-y-8 animate-in fade-in duration-500">
-            <div className="relative">
-              <div className="absolute inset-0 rounded-full blur-xl bg-primary/30 animate-pulse"></div>
-              <div className="h-12 w-12 rounded-full border-[3px] border-border border-t-primary animate-spin relative z-10"></div>
+          <div className="py-20 flex flex-col items-center justify-center space-y-10 animate-in fade-in zoom-in duration-500">
+            <div className="relative flex items-end justify-center h-24 w-40">
+              {/* Flame Group */}
+              <Flame className="h-16 w-16 text-primary animate-comic-flicker delay-75 absolute -translate-x-12" strokeWidth={3} />
+              <Flame className="h-24 w-24 text-primary animate-comic-flicker relative z-10" strokeWidth={3} />
+              <Flame className="h-16 w-16 text-primary animate-comic-flicker delay-150 absolute translate-x-12" strokeWidth={3} />
+              
+              {/* Ground Shadow */}
+              <div className="absolute -bottom-4 w-32 h-2 bg-foreground/10 rounded-full blur-md animate-pulse" />
             </div>
-            <div className="h-6 flex items-center justify-center mt-6">
-              <p className="text-lg font-medium text-foreground transition-opacity duration-300">
-                Reading your website...
+
+            <div className="flex flex-col items-center gap-3">
+              <div className="px-6 py-2 bg-foreground text-background rounded-full border-2 border-foreground shadow-[4px_4px_0px_#000] rotate-2 relative">
+                <span className="text-xl font-black uppercase tracking-widest italic animate-pulse">
+                  Cooking...
+                </span>
+                {/* Speech bubble pointer */}
+                <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-foreground rotate-45" />
+              </div>
+              <p className="text-sm font-bold text-muted-foreground uppercase tracking-widest mt-4">
+                Assembling the insults
               </p>
             </div>
           </div>

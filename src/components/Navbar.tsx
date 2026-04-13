@@ -8,7 +8,7 @@ import { HistoryModal } from "@/components/HistoryModal";
 
 export function Navbar() {
   return (
-    <nav className="sticky top-0 z-40 w-full glass-panel border-t-0 border-x-0">
+    <nav className="sticky top-0 z-40 w-full glass-panel border-b-2 border-foreground border-t-0 border-x-0">
       <div className="mx-auto max-w-5xl flex items-center justify-between px-4 py-3">
         {/* Logo / Brand */}
         <Link href="/" className="flex items-center gap-2 group">

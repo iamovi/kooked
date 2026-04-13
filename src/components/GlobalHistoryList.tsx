@@ -21,7 +21,8 @@ const gradeColor = (grade: string) => {
   return "bg-hotpink text-white border-foreground";
 };
 
-export function GlobalHistoryList() {
+export function GlobalHistoryList({ onItemClick }: { onItemClick?: () => void }) {
+
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -85,6 +86,7 @@ export function GlobalHistoryList() {
         <Link 
           key={item.id} 
           href={`/roast/${item.id}`}
+          onClick={() => onItemClick?.()}
           className="group block focus:outline-none focus:bg-muted/50 border-b border-border last:border-b-0 hover:bg-muted/30 transition-colors px-4 py-5"
         >
           <div className="flex justify-between items-start mb-2">
