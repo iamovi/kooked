@@ -39,6 +39,7 @@ export default async function RoastDetailsPage({ params }: { params: Promise<{ i
           grade={roast.grade}
           roasts={(roast.full_roasts as string[]) || [roast.roast_preview]}
           savingGrace={roast.saving_grace || "None. Truly hopeless."}
+          roastId={roast.id}
         />
       </div>
     </div>
