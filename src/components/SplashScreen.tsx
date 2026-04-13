@@ -35,7 +35,8 @@ export function SplashScreen() {
           <Image 
             src="/fireicon.png" 
             alt="Kooked Flame" 
-            fill 
+            fill
+            sizes="(max-width: 640px) 112px, 160px"
             className="object-contain grayscale-0"
             priority
           />
