@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { useTheme } from "next-themes";
 import { toPng } from "html-to-image";
 import { Share2, Download, Check } from "lucide-react";
 
@@ -17,6 +18,7 @@ const RoastCard = ({ grade, roasts, savingGrace, url, roastId }: RoastResult) =>
   const cardRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const { resolvedTheme } = useTheme();
 
   const handleShare = async () => {
     if (!roastId) return;
@@ -44,10 +46,11 @@ const RoastCard = ({ grade, roasts, savingGrace, url, roastId }: RoastResult) =>
     if (!cardRef.current) return;
     setExporting(true);
     try {
+      const bgColor = resolvedTheme === "dark" ? "#000000" : "#ffffff";
       const dataUrl = await toPng(cardRef.current, {
         cacheBust: true,
         pixelRatio: 2,
-        backgroundColor: "#000000",
+        backgroundColor: bgColor,
       });
       const link = document.createElement("a");
       link.download = `kooked-roast-${hostname}.png`;
